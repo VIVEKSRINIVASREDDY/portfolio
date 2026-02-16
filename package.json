@@ -1,0 +1,31 @@
+{
+  "name": "vivek-portfolio",
+  "version": "1.0.0",
+  "description": "Professional portfolio website of Vivek Srinivas Reddy - Aspiring Data Science Engineer. Showcasing projects, skills, and education in Data Science, Machine Learning, and Data Analytics.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src",
+    "dev": "live-server src"
+  },
+  "keywords": [
+    "portfolio",
+    "data-science",
+    "machine-learning",
+    "data-analytics",
+    "python",
+    "vivek",
+    "professional",
+    "responsive"
+  ],
+  "author": "Vivek Srinivas Reddy",
+  "homepage": "https://viveksrinivasreddy.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VIVEKSRINIVASREDDY/portfolio"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
