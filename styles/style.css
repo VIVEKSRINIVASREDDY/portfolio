@@ -529,8 +529,7 @@ body.dark-mode .navbar {
 .skill-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
     padding: var(--spacing-md);
     background-color: var(--bg-primary);
     border-radius: 8px;
@@ -539,19 +538,67 @@ body.dark-mode .navbar {
 }
 
 .skill-item:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: #ffffff;
-    transform: scale(1.1);
     box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.skill-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
 }
 
 .skill-item i {
     font-size: 2rem;
+    color: var(--primary-color);
+    transition: color var(--transition-fast);
+}
+
+.skill-item:hover i {
+    color: var(--secondary-color);
 }
 
 .skill-item span {
     font-weight: 500;
     font-size: 0.95rem;
+    text-align: center;
+}
+
+.skill-bar-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+.skill-bar {
+    flex: 1;
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    border-radius: 4px;
+    transition: width 1.5s ease-out, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+}
+
+.skill-item:hover .skill-progress {
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+}
+
+.skill-percentage {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 35px;
+    text-align: right;
 }
 
 /* ===== PROJECTS SECTION ===== */
@@ -1199,38 +1246,5 @@ body.dark-mode .navbar {
 
     .hero-subtitle {
         font-size: 1rem;
-    }
-}
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.skill {
-    background: #e2e2e2;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 5px;
-}
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background: #333;
-    color: #fff;
-}
-
-@media (max-width: 600px) {
-    nav a {
-        display: block;
-        margin: 10px 0;
-    }
-
-    .skills {
-        flex-direction: column;
     }
 }
