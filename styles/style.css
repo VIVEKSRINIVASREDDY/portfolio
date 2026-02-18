@@ -583,8 +583,12 @@ body.dark-mode .navbar {
     position: relative;
     width: 100%;
     height: 200px;
+    min-height: 200px;
     overflow: hidden;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-image img {
@@ -592,6 +596,7 @@ body.dark-mode .navbar {
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-normal);
+    display: block;
 }
 
 .project-card:hover .project-image img {
@@ -668,6 +673,80 @@ body.dark-mode .navbar {
 .tag:hover {
     background-color: var(--primary-color);
     color: #ffffff;
+}
+
+/* ===== CERTIFICATIONS SECTION ===== */
+.certifications {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background-color: var(--bg-secondary);
+}
+
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.certification-card {
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--primary-color);
+}
+
+.certification-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-left-color: var(--secondary-color);
+}
+
+.cert-header {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.cert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #ffffff;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.cert-title h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.cert-issuer {
+    margin: 4px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.cert-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.cert-meta p {
+    margin: 6px 0;
+}
+
+.cert-id {
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
 }
 
 /* ===== EDUCATION SECTION ===== */
@@ -1052,6 +1131,10 @@ body.dark-mode .navbar {
     .education-item:nth-child(even) .education-content,
     .education-item:nth-child(odd) .education-content {
         grid-column: 2;
+    }
+
+    .certifications-grid {
+        grid-template-columns: 1fr;
     }
 }
 
