@@ -3,19 +3,13 @@
 // Dark Mode, Smooth Scroll, Form, Mobile Menu
 // ===================================
 
-// ===== EmailJS Configuration =====
-// TODO: Replace these with your EmailJS credentials from https://www.emailjs.com/
-const EMAILJS_SERVICE_ID = 'service_xxxxx';     // Get from EmailJS Dashboard
-const EMAILJS_TEMPLATE_ID = 'template_xxxxx';   // Get from EmailJS Email Templates
-const EMAILJS_PUBLIC_KEY = 'xxxxxxxxxxxxx';     // Get from EmailJS Account > API Keys
-const RECIPIENT_EMAIL = 'ankireddyviveksrinivas@gmail.com';
-
-// Initialize EmailJS
-(function() {
-    if (EMAILJS_PUBLIC_KEY !== 'xxxxxxxxxxxxx') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
-})();
+// ===== FORMSPREE INTEGRATION =====
+// To set up:
+// 1. Go to https://formspree.io
+// 2. Sign up and create a new form
+// 3. Copy your form ID (e.g., f_xxxxxxxx)
+// 4. Replace 'YOUR_FORMSPREE_ID' in the form action attribute in index.html
+// Your email: ankireddyviveksrinivas@gmail.com
 
 // ===== DOM Elements =====
 const themeToggle = document.getElementById('themeToggle');
@@ -154,12 +148,6 @@ function updateActiveLinkOnScroll() {
 function validateForm(event) {
     event.preventDefault();
     
-    // Check if EmailJS is configured
-    if (EMAILJS_PUBLIC_KEY === 'xxxxxxxxxxxxx') {
-        alert('❌ Contact form is not yet configured. Please check the setup instructions or contact the website owner.');
-        return;
-    }
-    
     // Clear previous errors
     clearFormErrors();
     
@@ -198,11 +186,12 @@ function validateForm(event) {
     }
     
     if (isValid) {
-        submitFormWithEmailJS(from_name, from_email, message);
+        submitFormWithFormspree();
     }
 }
 
-function submitFormWithEmailJS(from_name, from_email, message) {
+function submitFormWithFormspree() {
+    const form = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const originalBtnText = submitBtn.innerHTML;
     
@@ -210,31 +199,35 @@ function submitFormWithEmailJS(from_name, from_email, message) {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     
-    // Prepare email parameters
-    const templateParams = {
-        to_email: RECIPIENT_EMAIL,
-        from_name: from_name,
-        from_email: from_email,
-        message: message,
-        reply_to: from_email
-    };
+    // Create FormData from form
+    const formData = new FormData(form);
     
-    // Send email via EmailJS
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-        .then(function(response) {
-            console.log('Email sent successfully!', response.status, response.text);
+    // Send via Formspree
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Message sent successfully!');
             showSuccessMessage();
-            contactForm.reset();
+            form.reset();
             clearFormErrors();
-        })
-        .catch(function(error) {
-            console.error('Failed to send email:', error);
-            showError('nameError', 'Failed to send message. Please try again or contact directly.');
-        })
-        .finally(function() {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
-        });
+        } else {
+            throw new Error('Form submission failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+        showError('nameError', 'Failed to send message. Please try again or contact directly.');
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+    });
 }
 
 function showSuccessMessage() {
