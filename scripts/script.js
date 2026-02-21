@@ -18,6 +18,11 @@ const navMenu = document.getElementById('navMenu');
 const body = document.body;
 const contactForm = document.getElementById('contactForm');
 const navLinks = document.querySelectorAll('[data-scroll]');
+const contactMeBtn = document.getElementById('contactMeBtn');
+const contactModal = document.getElementById('contactModal');
+const closeContactModal = document.getElementById('closeContactModal');
+const viewMoreBtn = document.getElementById('viewMoreBtn');
+const hiddenCerts = document.getElementById('hiddenCerts');
 
 // ===== FORM HELPER FUNCTIONS =====
 function showError(elementId, message) {
@@ -85,6 +90,40 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
+}
+
+// ===== CONTACT MODAL FUNCTIONALITY =====
+function openContactModal() {
+    contactModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeContactModalMenu() {
+    contactModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// ===== CERTIFICATIONS VIEW MORE FUNCTIONALITY =====
+function toggleCertifications() {
+    const isShowing = hiddenCerts.classList.contains('show');
+    
+    if (isShowing) {
+        // Hide remaining certs with animation
+        hiddenCerts.classList.add('hiding');
+        viewMoreBtn.classList.remove('expanded');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            hiddenCerts.classList.remove('show');
+            hiddenCerts.classList.remove('hiding');
+            viewMoreBtn.innerHTML = '<i class="fas fa-plus"></i> View More Certificates';
+        }, 520); // 400ms animation + 320ms last delay + 100ms buffer
+    } else {
+        // Show remaining certs
+        hiddenCerts.classList.add('show');
+        viewMoreBtn.classList.add('expanded');
+        viewMoreBtn.innerHTML = '<i class="fas fa-minus"></i> Show Less';
+    }
 }
 
 // ===== SMOOTH SCROLL FUNCTIONALITY =====
@@ -248,23 +287,41 @@ function showSuccessMessage() {
 
 // ===== SCROLL TO TOP SMOOTH BEHAVIOR =====
 function handleScrollAnimations() {
-    const elements = document.querySelectorAll('.info-item, .skill-category, .project-card, .education-item, .contact-item');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
+    const elements = document.querySelectorAll(
+        '.info-item, .skill-category, .skill-item, .project-card, .certification-card, .education-item, .contact-item'
+    );
+
+    // Track scroll direction
+    let lastScrollY = window.scrollY;
+    let scrollDirection = 'down';
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+        lastScrollY = currentScrollY;
+    }, { passive: true });
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            // Let the toggle handle hidden cert cards independently
+            if (entry.target.closest('#hiddenCerts')) return;
+
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.animation = 'slideInUp 600ms ease forwards';
-                observer.unobserve(entry.target);
+                const anim = scrollDirection === 'up'
+                    ? 'slideInDown 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards'
+                    : 'slideInUp 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards';
+                entry.target.style.animation = anim;
+            } else {
+                // Reset so the element re-animates next time it enters
+                entry.target.style.opacity = '0';
+                entry.target.style.animation = 'none';
             }
         });
-    }, observerOptions);
-    
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -60px 0px'
+    });
+
     elements.forEach(element => {
         element.style.opacity = '0';
         observer.observe(element);
@@ -287,6 +344,36 @@ function initEventListeners() {
     // Form submission
     if (contactForm) {
         contactForm.addEventListener('submit', validateForm);
+    }
+
+    // Contact modal handlers
+    if (contactMeBtn) {
+        contactMeBtn.addEventListener('click', openContactModal);
+    }
+    
+    if (closeContactModal) {
+        closeContactModal.addEventListener('click', closeContactModalMenu);
+    }
+    
+    // Close contact modal when clicking outside
+    if (contactModal) {
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                closeContactModalMenu();
+            }
+        });
+    }
+    
+    // Close contact modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+            closeContactModalMenu();
+        }
+    });
+    
+    // View More Certificates handler
+    if (viewMoreBtn) {
+        viewMoreBtn.addEventListener('click', toggleCertifications);
     }
     
     // Update active link on scroll
@@ -317,9 +404,83 @@ function getSmoothScrollSupport() {
     }
 }
 
+// ===== LOADING SCREEN =====
+function initLoadingScreen() {
+    const loader = document.getElementById('loadingScreen');
+    const loaderText = document.getElementById('loaderText');
+    if (!loader) return;
+
+    // Apply correct theme to loader before showing
+    const savedDark = localStorage.getItem('darkMode') === 'true';
+    const systemDark = !localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (!savedDark && !systemDark) {
+        loader.classList.add('light');
+    }
+
+    // Hide scrollbar while loading
+    document.body.style.overflow = 'hidden';
+
+    // Cycling messages
+    const messages = [
+        { text: 'Loading Data',           dots: true  },
+        { text: 'Preparing Insights',     dots: true  },
+        { text: "Loading Vivek's Portfolio", dots: true }
+    ];
+
+    function setMessage(index) {
+        if (!loaderText) return;
+        const msg = messages[index];
+        const dotsHTML = msg.dots
+            ? `<span class="loader-dots"><span>.</span><span>.</span><span>.</span></span>`
+            : '';
+
+        // Slide out
+        loaderText.classList.add('swap-out');
+        setTimeout(() => {
+            loaderText.innerHTML = msg.text + dotsHTML;
+            loaderText.classList.remove('swap-out');
+            loaderText.classList.add('swap-in');
+            // Force reflow then slide in
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    loaderText.classList.remove('swap-in');
+                });
+            });
+        }, 350);
+    }
+
+    // Schedule message transitions
+    setTimeout(() => setMessage(1), 1400);   // 1.4s → "Preparing Insights..."
+    setTimeout(() => setMessage(2), 2800);   // 2.8s → "Loading Vivek's Portfolio..."
+
+    // Minimum display time so the animation completes gracefully
+    const minDisplay = 4500;
+    const startTime = Date.now();
+
+    function dismiss() {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, minDisplay - elapsed);
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+            document.body.style.overflow = '';
+            // Remove from DOM after transition
+            setTimeout(() => loader.remove(), 650);
+        }, remaining);
+    }
+
+    if (document.readyState === 'complete') {
+        dismiss();
+    } else {
+        window.addEventListener('load', dismiss, { once: true });
+    }
+}
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Portfolio initialized');
+
+    // Loading screen must run first
+    initLoadingScreen();
     
     // Initialize all features
     initDarkMode();

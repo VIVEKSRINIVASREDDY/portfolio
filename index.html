@@ -21,6 +21,20 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
+
+    <!-- ===== LOADING SCREEN ===== -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="loader-letter">V</span>
+            </div>
+            <div class="loader-bar-wrap">
+                <div class="loader-bar"></div>
+            </div>
+            <p class="loader-text" id="loaderText">Loading Data<span class="loader-dots"><span>.</span><span>.</span><span>.</span></span></p>
+        </div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
@@ -36,7 +50,6 @@
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
-            
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -57,12 +70,47 @@
                     <a href="#projects" class="btn btn-primary" data-scroll>
                         <i class="fas fa-folder-open"></i> View Projects
                     </a>
-                    <a href="#contact" class="btn btn-secondary" data-scroll>
+                    
+                    <button id="contactMeBtn" class="btn btn-primary contact-btn">
                         <i class="fas fa-envelope"></i> Contact Me
-                    </a>
-                    <a href="../CV VIVEK FINAL.pdf" class="btn btn-primary" download>
+                    </button>
+                    
+                    <a href="./CV VIVEK.pdf" class="btn btn-primary" download>
                         <i class="fas fa-download"></i> Download CV
                     </a>
+                </div>
+                
+                <!-- Contact Modal -->
+                <div id="contactModal" class="contact-modal">
+                    <div class="contact-modal-content">
+                        <button class="contact-modal-close" id="closeContactModal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <h3>Get In Touch</h3>
+                        <div class="contact-options">
+                            <a href="mailto:ankireddyviveksrinivas@gmail.com" class="contact-option email-option">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <span class="option-title">Email Me</span>
+                                    <span class="option-desc">ankireddyviveksrinivas@gmail.com</span>
+                                </div>
+                            </a>
+                            <a href="tel:+918096893596" class="contact-option call-option">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <span class="option-title">Call Me</span>
+                                    <span class="option-desc">+91 8096893596</span>
+                                </div>
+                            </a>
+                            <a href="https://www.linkedin.com/in/viveksrinivasreddy/" target="_blank" class="contact-option linkedin-option">
+                                <i class="fab fa-linkedin"></i>
+                                <div>
+                                    <span class="option-title">LinkedIn</span>
+                                    <span class="option-desc">Connect with me</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="hero-social">
@@ -134,53 +182,21 @@
                 <div class="skill-category">
                     <h3>Languages</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fab fa-python"></i>
-                                <span>Python</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 90%"></div>
-                                </div>
-                                <span class="skill-percentage">90%</span>
-                            </div>
+                        <div class="skill-item python" title="Python">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-code"></i>
-                                <span>C++</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 75%"></div>
-                                </div>
-                                <span class="skill-percentage">75%</span>
-                            </div>
+                        <div class="skill-item cpp" title="C++">
+                            <i class="fas fa-code"></i>
+                            <span>C++</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fab fa-java"></i>
-                                <span>Java</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 70%"></div>
-                                </div>
-                                <span class="skill-percentage">70%</span>
-                            </div>
+                        <div class="skill-item java" title="Java">
+                            <i class="fab fa-java"></i>
+                            <span>Java</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-terminal"></i>
-                                <span>C</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 70%"></div>
-                                </div>
-                                <span class="skill-percentage">70%</span>
-                            </div>
+                        <div class="skill-item c-lang" title="C">
+                            <i class="fas fa-terminal"></i>
+                            <span>C</span>
                         </div>
                     </div>
                 </div>
@@ -189,29 +205,13 @@
                 <div class="skill-category">
                     <h3>Web</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fab fa-html5"></i>
-                                <span>HTML</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                                <span class="skill-percentage">85%</span>
-                            </div>
+                        <div class="skill-item html" title="HTML">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fab fa-css3-alt"></i>
-                                <span>CSS</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                                <span class="skill-percentage">85%</span>
-                            </div>
+                        <div class="skill-item css" title="CSS">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS</span>
                         </div>
                     </div>
                 </div>
@@ -220,53 +220,21 @@
                 <div class="skill-category">
                     <h3>Data Science</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-cube"></i>
-                                <span>NumPy</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                                <span class="skill-percentage">85%</span>
-                            </div>
+                        <div class="skill-item numpy" title="NumPy">
+                            <i class="fas fa-cube"></i>
+                            <span>NumPy</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-table"></i>
-                                <span>Pandas</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 88%"></div>
-                                </div>
-                                <span class="skill-percentage">88%</span>
-                            </div>
+                        <div class="skill-item pandas" title="Pandas">
+                            <i class="fas fa-table"></i>
+                            <span>Pandas</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Matplotlib</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 80%"></div>
-                                </div>
-                                <span class="skill-percentage">80%</span>
-                            </div>
+                        <div class="skill-item matplotlib" title="Matplotlib">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Matplotlib</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Seaborn</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 80%"></div>
-                                </div>
-                                <span class="skill-percentage">80%</span>
-                            </div>
+                        <div class="skill-item seaborn" title="Seaborn">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Seaborn</span>
                         </div>
                     </div>
                 </div>
@@ -275,41 +243,17 @@
                 <div class="skill-category">
                     <h3>Tools</h3>
                     <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-file-excel"></i>
-                                <span>Excel</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 90%"></div>
-                                </div>
-                                <span class="skill-percentage">90%</span>
-                            </div>
+                        <div class="skill-item excel" title="Excel">
+                            <i class="fas fa-file-excel"></i>
+                            <span>Excel</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-chart-pie"></i>
-                                <span>Power BI</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                                <span class="skill-percentage">85%</span>
-                            </div>
+                        <div class="skill-item powerbi" title="Power BI">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Power BI</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <i class="fas fa-database"></i>
-                                <span>MySQL</span>
-                            </div>
-                            <div class="skill-bar-container">
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 75%"></div>
-                                </div>
-                                <span class="skill-percentage">75%</span>
-                            </div>
+                        <div class="skill-item mysql" title="MySQL">
+                            <i class="fas fa-database"></i>
+                            <span>MySQL</span>
                         </div>
                     </div>
                 </div>
@@ -403,7 +347,7 @@
                 <div class="header-line"></div>
             </div>
             
-            <div class="certifications-grid">
+            <div class="certifications-grid" id="certificationsGrid">
                 <!-- Certification 1 - Aug 2025 -->
                 <div class="certification-card">
                     <div class="cert-header">
@@ -455,89 +399,99 @@
                     </div>
                 </div>
 
-                <!-- Certification 4 - Aug 2025 -->
-                <div class="certification-card">
-                    <div class="cert-header">
-                        <div class="cert-icon">
-                            <i class="fas fa-code"></i>
+                <!-- Hidden Certifications (4-8) -->
+                <div class="hidden-certs" id="hiddenCerts">
+                    <!-- Certification 4 - Aug 2025 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>C Programming Training</h3>
+                                <p class="cert-issuer">Professional Training</p>
+                            </div>
                         </div>
-                        <div class="cert-title">
-                            <h3>C Programming Training</h3>
-                            <p class="cert-issuer">Professional Training</p>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Aug 2025</p>
+                            <p>Comprehensive training (35+ hours) on structured programming fundamentals. Memory management, pointers, arrays, functions, and file handling.</p>
                         </div>
                     </div>
-                    <div class="cert-meta">
-                        <p><i class="far fa-calendar"></i> Issued Aug 2025</p>
-                        <p>Comprehensive training (35+ hours) on structured programming fundamentals. Memory management, pointers, arrays, functions, and file handling.</p>
+
+                    <!-- Certification 5 - Sep 2024 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>The Bits and Bytes of Computer Networking</h3>
+                                <p class="cert-issuer">Google</p>
+                            </div>
+                        </div>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
+                            <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/I0COVVR3RPRE" target="_blank" class="cert-link">I0COVVR3RPRE</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Certification 6 - Sep 2024 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>Introduction to Hardware and Operating Systems</h3>
+                                <p class="cert-issuer">IBM</p>
+                            </div>
+                        </div>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
+                            <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/D1TZXKP0R1RX" target="_blank" class="cert-link">D1TZXKP0R1RX</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Certification 7 - Sep 2024 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>Digital Systems: From Logic Gates to Processors</h3>
+                                <p class="cert-issuer">Universitat Autonoma de Barcelona</p>
+                            </div>
+                        </div>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
+                            <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/MDXDR8KJVHNT" target="_blank" class="cert-link">MDXDR8KJVHNT</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Certification 8 - Oct 2023 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>Tata - Data Visualisation: Empowering Business with Effective Insights Job Simulation</h3>
+                                <p class="cert-issuer">Forage</p>
+                            </div>
+                        </div>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Oct 2023</p>
+                            <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.theforage.com/completion-certificates/Tata/MyXvBcppsW2FkNYCX_Tata_AXpysBD9rZJ8Z88GS_1697284418673_completion_certificate.pdf" target="_blank" class="cert-link">QswDARbbWnKQfuSeG</a></p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Certification 5 - Sep 2024 -->
-                <div class="certification-card">
-                    <div class="cert-header">
-                        <div class="cert-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <div class="cert-title">
-                            <h3>The Bits and Bytes of Computer Networking</h3>
-                            <p class="cert-issuer">Google</p>
-                        </div>
-                    </div>
-                    <div class="cert-meta">
-                        <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
-                        <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/I0COVVR3RPRE" target="_blank" class="cert-link">I0COVVR3RPRE</a></p>
-                    </div>
-                </div>
-
-                <!-- Certification 6 - Sep 2024 -->
-                <div class="certification-card">
-                    <div class="cert-header">
-                        <div class="cert-icon">
-                            <i class="fas fa-microchip"></i>
-                        </div>
-                        <div class="cert-title">
-                            <h3>Introduction to Hardware and Operating Systems</h3>
-                            <p class="cert-issuer">IBM</p>
-                        </div>
-                    </div>
-                    <div class="cert-meta">
-                        <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
-                        <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/D1TZXKP0R1RX" target="_blank" class="cert-link">D1TZXKP0R1RX</a></p>
-                    </div>
-                </div>
-
-                <!-- Certification 7 - Sep 2024 -->
-                <div class="certification-card">
-                    <div class="cert-header">
-                        <div class="cert-icon">
-                            <i class="fas fa-chip"></i>
-                        </div>
-                        <div class="cert-title">
-                            <h3>Digital Systems: From Logic Gates to Processors</h3>
-                            <p class="cert-issuer">Universitat Autonoma de Barcelona</p>
-                        </div>
-                    </div>
-                    <div class="cert-meta">
-                        <p><i class="far fa-calendar"></i> Issued Sep 2024</p>
-                        <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/verify/MDXDR8KJVHNT" target="_blank" class="cert-link">MDXDR8KJVHNT</a></p>
-                    </div>
-                </div>
-
-                <!-- Certification 8 - Oct 2023 -->
-                <div class="certification-card">
-                    <div class="cert-header">
-                        <div class="cert-icon">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <div class="cert-title">
-                            <h3>Tata - Data Visualisation: Empowering Business with Effective Insights Job Simulation</h3>
-                            <p class="cert-issuer">Forage</p>
-                        </div>
-                    </div>
-                    <div class="cert-meta">
-                        <p><i class="far fa-calendar"></i> Issued Oct 2023</p>
-                        <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.theforage.com/completion-certificates/Tata/MyXvBcppsW2FkNYCX_Tata_AXpysBD9rZJ8Z88GS_1697284418673_completion_certificate.pdf" target="_blank" class="cert-link">QswDARbbWnKQfuSeG</a></p>
-                    </div>
+                <!-- View More Button -->
+                <div class="view-more-container">
+                    <button class="btn btn-secondary" id="viewMoreBtn">
+                        <i class="fas fa-plus"></i> View More Certificates
+                    </button>
                 </div>
             </div>
         </div>
@@ -602,6 +556,8 @@
             </div>
         </div>
     </section>
+
+    <!-- Contact modal removed -->
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
