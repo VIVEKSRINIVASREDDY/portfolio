@@ -2870,7 +2870,7 @@ body.dark-mode .contact-option:hover {
 }
 
 .certification-card:hover .cert-icon {
-    transform: scale(1.2) rotate(-12deg);
+    transform: scale(1.08) rotate(-4deg);
     box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
 }
 
