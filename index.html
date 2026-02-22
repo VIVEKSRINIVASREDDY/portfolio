@@ -22,11 +22,33 @@
 </head>
 <body>
 
+    <!-- ===== THEME SWITCH TOAST ===== -->
+    <div id="themeToast" class="theme-toast" aria-live="polite">
+        <i class="fas fa-sun theme-toast-icon" id="themeToastIcon"></i>
+        <span id="themeToastText">Switching to Light Mode</span>
+    </div>
+
     <!-- ===== LOADING SCREEN ===== -->
     <div id="loadingScreen" class="loading-screen">
+
+        <!-- Liquid blobs -->
+        <div class="ll-blobs">
+            <span class="ll-blob"></span>
+            <span class="ll-blob"></span>
+            <span class="ll-blob"></span>
+            <span class="ll-blob"></span>
+        </div>
+
         <div class="loader-content">
             <div class="loader-logo">
-                <span class="loader-letter">V</span>
+                <!-- Ripple rings -->
+                <span class="ll-ripple"></span>
+                <span class="ll-ripple ll-ripple--2"></span>
+                <span class="ll-ripple ll-ripple--3"></span>
+                <!-- Core glass circle -->
+                <div class="ll-core">
+                    <span class="ll-monogram">V</span>
+                </div>
             </div>
             <div class="loader-bar-wrap">
                 <div class="loader-bar"></div>
@@ -48,6 +70,7 @@
                 <a href="#contact" class="nav-link" data-scroll>Contact</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                     <i class="fas fa-moon"></i>
+                    <span class="theme-label" id="themeLabel">Light Mode</span>
                 </button>
             </div>
             <div class="hamburger" id="hamburger">
@@ -75,7 +98,7 @@
 
                         <!-- CV split-action dropdown -->
                         <div class="cv-dropdown">
-                            <button class="btn btn-primary cv-main-btn" aria-haspopup="true" aria-expanded="false" id="cvDropdownBtn">
+                            <button class="btn btn-cv cv-main-btn" aria-haspopup="true" aria-expanded="false" id="cvDropdownBtn">
                                 <i class="fa-regular fa-file"></i> CV
                                 <i class="fas fa-chevron-down cv-chevron"></i>
                             </button>
@@ -100,7 +123,7 @@
 
                     <!-- Row 2: Contact Me -->
                     <div class="hero-btn-row">
-                        <button id="contactMeBtn" class="btn btn-primary contact-btn">
+                        <button id="contactMeBtn" class="btn btn-contact-outline contact-btn">
                             <i class="fas fa-envelope"></i> Contact Me
                         </button>
                     </div>
@@ -499,6 +522,23 @@
                     <div class="certification-card">
                         <div class="cert-header">
                             <div class="cert-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="cert-title">
+                                <h3>Computer Communications Specialization</h3>
+                                <p class="cert-issuer">University of Colorado Boulder · Coursera</p>
+                            </div>
+                        </div>
+                        <div class="cert-meta">
+                            <p><i class="far fa-calendar"></i> Issued Feb 2026</p>
+                            <p class="cert-id"><strong>Credential ID:</strong> <a href="https://www.coursera.org/account/accomplishments/specialization/BR1ZY73XFUZ7" target="_blank" class="cert-link">BR1ZY73XFUZ7</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Certification 9 - Oct 2023 -->
+                    <div class="certification-card">
+                        <div class="cert-header">
+                            <div class="cert-icon">
                                 <i class="fas fa-certificate"></i>
                             </div>
                             <div class="cert-title">
@@ -537,9 +577,9 @@
                     <div class="education-content">
                         <h3>Bachelor of Technology</h3>
                         <p class="education-school">
-                            <i class="fas fa-university"></i> Lovely Professional University
+                            <i class="fas fa-university"></i> <a href="https://maps.google.com/?q=Lovely+Professional+University,Phagwara,Punjab" target="_blank" rel="noopener" class="education-link">Lovely Professional University</a>
                         </p>
-                        <p class="education-degree">Computer Science & Engineering</p>
+                        <p class="education-degree"><i class="fas fa-laptop-code"></i> Computer Science & Engineering</p>
                         <p class="education-period">
                             <i class="far fa-calendar"></i> 2023 – Present
                         </p>
@@ -551,9 +591,8 @@
                     <div class="education-content">
                         <h3>Intermediate (XII)</h3>
                         <p class="education-school">
-                            <i class="fas fa-school"></i> SR Junior College, Nellore
+                            <i class="fas fa-school"></i> <a href="https://maps.google.com/?q=SR+Junior+College,Nellore,Andhra+Pradesh" target="_blank" rel="noopener" class="education-link">SR Junior College, Nellore</a>
                         </p>
-                        <p class="education-degree">Science Stream</p>
                         <p class="education-score">
                             <i class="fas fa-star"></i> Scored: 82.1%
                         </p>
@@ -568,9 +607,8 @@
                     <div class="education-content">
                         <h3>Secondary (X)</h3>
                         <p class="education-school">
-                            <i class="fas fa-school"></i> Sri Chaitanya High School, Nellore
+                            <i class="fas fa-school"></i> <a href="https://maps.google.com/?q=Sri+Chaitanya+High+School,Nellore,Andhra+Pradesh" target="_blank" rel="noopener" class="education-link">Sri Chaitanya High School, Nellore</a>
                         </p>
-                        <p class="education-degree">Completed with Distinction</p>
                         <p class="education-score">
                             <i class="fas fa-star"></i> Scored: 98%
                         </p>
@@ -627,19 +665,19 @@
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <h3>Email</h3>
-                        <p>ankireddyviveksrinivas@gmail.com</p>
+                        <p><a href="mailto:ankireddyviveksrinivas@gmail.com" class="contact-link">ankireddyviveksrinivas@gmail.com</a></p>
                     </div>
                     
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <h3>Location</h3>
-                        <p>Nellore, Andhra Pradesh, India</p>
+                        <p><a href="https://maps.google.com/?q=Gudur,Andhra+Pradesh,India" target="_blank" rel="noopener" class="contact-link">Gudur, Andhra Pradesh, India</a></p>
                     </div>
                     
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
                         <h3>Phone</h3>
-                        <p>+91 8096893596</p>
+                        <p><a href="tel:+918096893596" class="contact-link">+91 8096893596</a></p>
                     </div>
                     
                     <div class="social-links">

@@ -71,14 +71,34 @@ function toggleDarkMode() {
 }
 
 function updateThemeIcon(isDarkMode) {
-    const icon = themeToggle.querySelector('i');
+    const icon  = themeToggle.querySelector('i');
+    const label = document.getElementById('themeLabel');
     if (isDarkMode) {
+        // currently dark → clicking will go to light
         icon.classList.remove('fa-moon');
         icon.classList.add('fa-sun');
+        if (label) label.textContent = 'Light Mode';
     } else {
+        // currently light → clicking will go to dark
         icon.classList.remove('fa-sun');
         icon.classList.add('fa-moon');
+        if (label) label.textContent = 'Dark Mode';
     }
+}
+
+let _toastTimer = null;
+function showThemeToast(isDarkMode) {
+    const toast    = document.getElementById('themeToast');
+    const toastTxt = document.getElementById('themeToastText');
+    const toastIco = document.getElementById('themeToastIcon');
+    if (!toast) return;
+
+    toastTxt.textContent = isDarkMode ? 'Switched to Dark Mode' : 'Switched to Light Mode';
+    toastIco.className   = isDarkMode ? 'fas fa-moon theme-toast-icon' : 'fas fa-sun theme-toast-icon';
+
+    toast.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
 }
 
 // ===== MOBILE MENU FUNCTIONALITY =====
@@ -117,7 +137,7 @@ function toggleCertifications() {
             hiddenCerts.classList.remove('show');
             hiddenCerts.classList.remove('hiding');
             viewMoreBtn.innerHTML = '<i class="fas fa-plus"></i> View More Certificates';
-        }, 520); // 400ms animation + 320ms last delay + 100ms buffer
+        }, 600); // 400ms animation + 400ms last delay + 100ms buffer
     } else {
         // Show remaining certs
         hiddenCerts.classList.add('show');
@@ -301,25 +321,41 @@ function handleScrollAnimations() {
     }, { passive: true });
 
     const observer = new IntersectionObserver((entries) => {
+        // Count how many elements are entering in this batch for staggering
+        let batchIndex = 0;
+
         entries.forEach(entry => {
             // Let the toggle handle hidden cert cards independently
             if (entry.target.closest('#hiddenCerts')) return;
 
             if (entry.isIntersecting) {
+                const delay = batchIndex * 55;
+                batchIndex++;
+
+                // Hint the compositor before animation starts
+                entry.target.style.willChange = 'transform, opacity';
+
                 entry.target.style.opacity = '1';
+                const duration = 620;
                 const anim = scrollDirection === 'up'
-                    ? 'slideInDown 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards'
-                    : 'slideInUp 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards';
+                    ? `slideInDown ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms forwards`
+                    : `slideInUp  ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms forwards`;
                 entry.target.style.animation = anim;
+
+                // Release will-change after animation completes
+                setTimeout(() => {
+                    entry.target.style.willChange = 'auto';
+                }, duration + delay + 100);
             } else {
                 // Reset so the element re-animates next time it enters
                 entry.target.style.opacity = '0';
                 entry.target.style.animation = 'none';
+                entry.target.style.willChange = 'auto';
             }
         });
     }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -60px 0px'
+        threshold: 0.10,
+        rootMargin: '0px 0px -40px 0px'
     });
 
     elements.forEach(element => {
@@ -330,8 +366,13 @@ function handleScrollAnimations() {
 
 // ===== EVENT LISTENERS =====
 function initEventListeners() {
-    // Dark mode toggle
-    themeToggle.addEventListener('click', toggleDarkMode);
+    // Dark mode toggle — toast and theme switch on same frame
+    themeToggle.addEventListener('click', () => {
+        const goingDark = !body.classList.contains('dark-mode');
+        // Show toast first, then switch theme immediately after (same paint)
+        showThemeToast(goingDark);
+        toggleDarkMode();
+    });
     
     // Mobile menu
     hamburger.addEventListener('click', toggleMobileMenu);
