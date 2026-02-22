@@ -371,6 +371,36 @@ function initEventListeners() {
         }
     });
     
+    // CV Dropdown toggle
+    const cvDropdownBtn  = document.getElementById('cvDropdownBtn');
+    const cvDropdownMenu = document.getElementById('cvDropdownMenu');
+    const cvDropdown     = cvDropdownBtn && cvDropdownBtn.closest('.cv-dropdown');
+
+    if (cvDropdownBtn && cvDropdown) {
+        cvDropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = cvDropdown.classList.toggle('open');
+            cvDropdownBtn.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.cv-dropdown')) {
+                cvDropdown.classList.remove('open');
+                cvDropdownBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cvDropdown.classList.contains('open')) {
+                cvDropdown.classList.remove('open');
+                cvDropdownBtn.setAttribute('aria-expanded', 'false');
+                cvDropdownBtn.focus();
+            }
+        });
+    }
+
     // View More Certificates handler
     if (viewMoreBtn) {
         viewMoreBtn.addEventListener('click', toggleCertifications);

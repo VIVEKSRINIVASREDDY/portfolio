@@ -67,17 +67,43 @@
                 <p class="hero-subtitle">Passionate about Data Science, Machine Learning, and transforming data into actionable insights.</p>
                 
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary" data-scroll>
-                        <i class="fas fa-folder-open"></i> View Projects
-                    </a>
-                    
-                    <button id="contactMeBtn" class="btn btn-primary contact-btn">
-                        <i class="fas fa-envelope"></i> Contact Me
-                    </button>
-                    
-                    <a href="./CV VIVEK.pdf" class="btn btn-primary" download>
-                        <i class="fas fa-download"></i> Download CV
-                    </a>
+                    <!-- Row 1: View Projects + My CV -->
+                    <div class="hero-btn-row">
+                        <a href="#projects" class="btn btn-primary" data-scroll>
+                            <i class="fas fa-folder-open"></i> View Projects
+                        </a>
+
+                        <!-- CV split-action dropdown -->
+                        <div class="cv-dropdown">
+                            <button class="btn btn-primary cv-main-btn" aria-haspopup="true" aria-expanded="false" id="cvDropdownBtn">
+                                <i class="fa-regular fa-file"></i> CV
+                                <i class="fas fa-chevron-down cv-chevron"></i>
+                            </button>
+                            <div class="cv-dropdown-menu" id="cvDropdownMenu" role="menu">
+                                <a href="./CV.pdf" class="cv-option" target="_blank" rel="noopener" role="menuitem">
+                                    <span class="cv-option-icon view"><i class="fas fa-eye"></i></span>
+                                    <div class="cv-option-text">
+                                        <span class="cv-option-title">View CV</span>
+                                        <span class="cv-option-desc">Open in new tab</span>
+                                    </div>
+                                </a>
+                                <a href="./CV.pdf" class="cv-option" download role="menuitem">
+                                    <span class="cv-option-icon"><i class="fas fa-download"></i></span>
+                                    <div class="cv-option-text">
+                                        <span class="cv-option-title">Download CV</span>
+                                        <span class="cv-option-desc">Save PDF to device</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Contact Me -->
+                    <div class="hero-btn-row">
+                        <button id="contactMeBtn" class="btn btn-primary contact-btn">
+                            <i class="fas fa-envelope"></i> Contact Me
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Contact Modal -->

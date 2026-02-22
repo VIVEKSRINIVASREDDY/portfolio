@@ -351,21 +351,119 @@ a:hover {
     transform: translateY(-2px);
 }
 
-/* ===== NAVBAR ===== */
+/* ===== NAVBAR — LIQUID GLASS ===== */
 .navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-fast);
+    overflow: hidden;
+
+    /* Liquid glass background */
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.72) 0%,
+        rgba(224, 238, 255, 0.58) 50%,
+        rgba(255, 255, 255, 0.68) 100%
+    );
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+
+    /* Glass border + layered depth */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 2px 20px rgba(37, 99, 235, 0.09),
+        0 8px 40px rgba(0, 0, 0, 0.07);
+
+    transition: background var(--transition-fast),
+                box-shadow var(--transition-fast),
+                backdrop-filter var(--transition-fast);
+}
+
+/* Liquid shimmer sweep — animated glare across the glass */
+.navbar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        108deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.0) 30%,
+        rgba(255, 255, 255, 0.54) 48%,
+        rgba(200, 225, 255, 0.32) 55%,
+        transparent 70%
+    );
+    transform: translateX(-120%) skewX(-20deg);
+    pointer-events: none;
+    z-index: 0;
+    animation: liquidShimmer 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Prismatic top-edge highlight */
+.navbar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.95) 20%,
+        rgba(180, 210, 255, 0.88) 50%,
+        rgba(255, 255, 255, 0.95) 80%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes liquidShimmer {
+    0%   { transform: translateX(-120%) skewX(-20deg); opacity: 0;   }
+    10%  { opacity: 1; }
+    60%  { transform: translateX(220%) skewX(-20deg);  opacity: 0.6; }
+    100% { transform: translateX(220%) skewX(-20deg);  opacity: 0;   }
 }
 
 body.dark-mode .navbar {
-    background-color: rgba(15, 15, 15, 0.95);
+    background: linear-gradient(
+        135deg,
+        rgba(20, 20, 38, 0.62) 0%,
+        rgba(10, 10, 28, 0.52) 50%,
+        rgba(16, 16, 36, 0.60) 100%
+    );
+    backdrop-filter: blur(28px) saturate(180%) brightness(0.88);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(0.88);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        0 2px 20px rgba(0, 102, 255, 0.13),
+        0 8px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Dark shimmer — subtle blue-cyan tint */
+body.dark-mode .navbar::before {
+    background: linear-gradient(
+        108deg,
+        transparent 0%,
+        rgba(0, 102, 255, 0.0) 30%,
+        rgba(80, 160, 255, 0.11) 48%,
+        rgba(0, 212, 255, 0.07) 55%,
+        transparent 70%
+    );
+}
+
+/* Dark top edge — neon blue-cyan line */
+body.dark-mode .navbar::after {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 102, 255, 0.55) 20%,
+        rgba(0, 212, 255, 0.45) 50%,
+        rgba(0, 102, 255, 0.55) 80%,
+        transparent 100%
+    );
 }
 
 .nav-container {
@@ -376,6 +474,8 @@ body.dark-mode .navbar {
     justify-content: space-between;
     align-items: center;
     height: 70px;
+    position: relative;
+    z-index: 2;
 }
 
 .brand-logo {
@@ -532,12 +632,200 @@ body.dark-mode .navbar {
 
 .hero-buttons {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
+    align-items: flex-start;
+}
+
+.hero-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
 }
 
 /* contact chooser removed */
+
+/* ===== CV DROPDOWN SPLIT BUTTON ===== */
+.cv-dropdown {
+    position: relative;
+    display: inline-flex;
+}
+
+.cv-main-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cv-chevron {
+    font-size: 0.72rem;
+    transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-left: 2px;
+}
+
+.cv-dropdown.open .cv-chevron {
+    transform: rotate(180deg);
+}
+
+.cv-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    min-width: 240px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: top center;
+    transition:
+        opacity 240ms ease,
+        transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        visibility 240ms ease;
+
+    /* Liquid glass */
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.78) 0%,
+        rgba(224, 238, 255, 0.65) 50%,
+        rgba(255, 255, 255, 0.72) 100%
+    );
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 4px 24px rgba(37, 99, 235, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+}
+
+.cv-dropdown.open .cv-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Arrow caret pointing up */
+.cv-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.82);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 2px 0 0 0;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+}
+
+.cv-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition:
+        background 200ms ease,
+        transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 200ms ease;
+}
+
+.cv-option:hover {
+    background: rgba(37, 99, 235, 0.10);
+    transform: translateX(4px);
+    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.18);
+}
+
+.cv-option-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(29, 78, 216, 0.1));
+    color: var(--primary-color);
+    transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cv-option-icon.view {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+    color: #10b981;
+}
+
+.cv-option:hover .cv-option-icon {
+    transform: scale(1.15) rotate(-6deg);
+}
+
+.cv-option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cv-option-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.cv-option-desc {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.2;
+}
+
+/* --- Dark mode dropdown --- */
+body.dark-mode .cv-dropdown-menu {
+    background: linear-gradient(
+        135deg,
+        rgba(20, 20, 38, 0.82) 0%,
+        rgba(10, 10, 28, 0.72) 50%,
+        rgba(16, 16, 36, 0.78) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 4px 24px rgba(0, 102, 255, 0.18),
+        0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .cv-dropdown-menu::before {
+    background: rgba(20, 20, 38, 0.85);
+    border-color: rgba(255, 255, 255, 0.09);
+}
+
+body.dark-mode .cv-option:hover {
+    background: rgba(0, 102, 255, 0.14);
+    box-shadow: inset 0 0 0 1px rgba(0, 102, 255, 0.22);
+}
+
+body.dark-mode .cv-option-icon {
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.22), rgba(0, 102, 255, 0.12));
+    color: var(--primary-color);
+}
+
+body.dark-mode .cv-option-icon.view {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(16, 185, 129, 0.12));
+    color: #34d399;
+}
 
 .hero-social {
     display: flex;
@@ -1881,12 +2169,21 @@ body:not(.dark-mode) .form-group textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-/* --- Navbar: enhanced glass --- */
+/* --- Navbar: liquid glass (light) --- */
 body:not(.dark-mode) .navbar {
-    background: rgba(255, 255, 255, 0.82) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.72) 0%,
+        rgba(224, 238, 255, 0.58) 50%,
+        rgba(255, 255, 255, 0.68) 100%
+    ) !important;
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.08) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 2px 20px rgba(37, 99, 235, 0.09),
+        0 8px 40px rgba(0, 0, 0, 0.07) !important;
 }
 
 /* ============================================================
@@ -1894,12 +2191,21 @@ body:not(.dark-mode) .navbar {
    Translucent dark surfaces with blur and subtle glow borders
    ============================================================ */
 
-/* --- Dark navbar --- */
+/* --- Dark navbar: liquid glass --- */
 body.dark-mode .navbar {
-    background: rgba(15, 15, 15, 0.78) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: linear-gradient(
+        135deg,
+        rgba(20, 20, 38, 0.62) 0%,
+        rgba(10, 10, 28, 0.52) 50%,
+        rgba(16, 16, 36, 0.60) 100%
+    ) !important;
+    backdrop-filter: blur(28px) saturate(180%) brightness(0.88) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(0.88) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        0 2px 20px rgba(0, 102, 255, 0.13),
+        0 8px 40px rgba(0, 0, 0, 0.45) !important;
 }
 
 /* --- About: info cards --- */
