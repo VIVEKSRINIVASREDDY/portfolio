@@ -2881,7 +2881,7 @@ body.dark-mode .contact-option:hover {
 
 /* Cert title slides up slightly */
 .certification-card:hover .cert-title h3 {
-    color: var(--primary-color);
+    color: #ffffff;
     transition: color 200ms ease;
 }
 
