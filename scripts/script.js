@@ -525,7 +525,8 @@ function initLoadingScreen() {
     setTimeout(() => setMessage(2), 2800);   // 2.8s → "Loading Vivek's Portfolio..."
 
     // Minimum display time so the animation completes gracefully
-    const minDisplay = 4500;
+    // Increased significantly to allow 3D loading animation to be visible
+    const minDisplay = 8000;
     const startTime = Date.now();
 
     function dismiss() {
